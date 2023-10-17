@@ -39,9 +39,8 @@ const PRODUCT_COLOR = [
   '#94D82D',
   '#FFC107',
 ];
-
+// import '../../public/assets'
 // ----------------------------------------------------------------------
-
 export const products = [...Array(24)].map((_, index) => {
   const setIndex = index + 1;
 
