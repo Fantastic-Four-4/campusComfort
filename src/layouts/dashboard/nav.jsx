@@ -21,9 +21,76 @@ import Logo from '../../components/logo';
 import Scrollbar from '../../components/scrollbar';
 
 import { NAV } from './config-layout';
-import navConfig from './config-navigation';
+// import navConfig from './config-navigation';
+import SvgColor from '../../components/svg-color';
+import { useSelector } from 'react-redux';
 
 // ----------------------------------------------------------------------
+
+const icon = (name) => (
+  <SvgColor src={`/assets/icons/navbar/${name}.svg`} sx={{ width: 1, height: 1 }} />
+);
+// ----------------------------------------------------------------------
+const navConfig = [
+  {
+    title: 'dashboard',
+    path: '/',
+    icon: icon('ic_analytics'),
+  },
+  {
+    title: 'user',
+    path: '/user',
+    icon: icon('ic_user'),
+  },
+  {
+    title: 'hostels',
+    path: '/hostels',
+    icon: icon('ic_cart'),
+  },
+  {
+    title: 'blog',
+    path: '/blog',
+    icon: icon('ic_blog'),
+  },
+
+  {
+    title: 'Not found',
+    path: '/404',
+    icon: icon('ic_disabled'),
+  },
+];
+const navConfigloggedOUT = [
+  {
+    title: 'dashboard',
+    path: '/',
+    icon: icon('ic_analytics'),
+  },
+  {
+    title: 'user',
+    path: '/user',
+    icon: icon('ic_user'),
+  },
+  {
+    title: 'hostel',
+    path: '/hostels',
+    icon: icon('ic_cart'),
+  },
+  {
+    title: 'blog',
+    path: '/blog',
+    icon: icon('ic_blog'),
+  },
+  {
+    title: 'login',
+    path: '/login',
+    icon: icon('ic_lock'),
+  },
+  {
+    title: 'Not found',
+    path: '/404',
+    icon: icon('ic_disabled'),
+  },
+];
 
 export default function Nav({ openNav, onCloseNav }) {
   const pathname = usePathname();
@@ -36,8 +103,12 @@ export default function Nav({ openNav, onCloseNav }) {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
-
+  const { user, adminToken, userToken,loading, admin } = useSelector(
+    (state) => state.user
+  );
   const renderAccount = (
+    <>{user&&userToken?
+      
     <Box
       sx={{
         my: 3,
@@ -53,26 +124,39 @@ export default function Nav({ openNav, onCloseNav }) {
       <Avatar src={account.photoURL} alt="photoURL" />
 
       <Box sx={{ ml: 2 }}>
-        <Typography variant="subtitle2">{account.displayName}</Typography>
+        <Typography variant="subtitle2">{user?.name}</Typography>
 
         <Typography variant="body2" sx={{ color: 'text.secondary' }}>
           {account.role}
         </Typography>
       </Box>
-    </Box>
+    </Box>:null}
+    </>
+
   );
 
   const renderMenu = (
     <Stack component="nav" spacing={0.5} sx={{ px: 2 }}>
-      {navConfig.map((item) => (
-        <NavItem key={item.title} item={item} />
-      ))}
+{userToken&&user?
+
+<>
+{navConfig.map((item) => (
+  <NavItem key={item.title} item={item} />
+  ))}
+  </>
+  :<>
+  {navConfigloggedOUT.map((item) => (
+    <NavItem key={item.title} item={item} />
+    ))
+  }
+  </>
+  }
     </Stack>
   );
 
   const renderUpgrade = (
     <Box sx={{ px: 2.5, pb: 3, mt: 10 }}>
-      <Stack alignItems="center" spacing={3} sx={{ pt: 5, borderRadius: 2, position: 'relative' }}>
+      {/* <Stack alignItems="center" spacing={3} sx={{ pt: 5, borderRadius: 2, position: 'relative' }}>
         <Box
           component="img"
           src="/assets/illustrations/illustration_avatar.png"
@@ -95,7 +179,7 @@ export default function Nav({ openNav, onCloseNav }) {
         >
           Upgrade to Pro
         </Button>
-      </Stack>
+      </Stack> */}
     </Box>
   );
 

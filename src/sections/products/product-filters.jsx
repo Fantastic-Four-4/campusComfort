@@ -17,6 +17,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Iconify from '../../components/iconify';
 import Scrollbar from '../../components/scrollbar';
 import { ColorPicker } from '../../components/color-utils';
+import { useEffect, useState } from 'react';
 
 // ----------------------------------------------------------------------
 
@@ -26,8 +27,13 @@ export const SORT_OPTIONS = [
   { value: 'priceDesc', label: 'Price: High-Low' },
   { value: 'priceAsc', label: 'Price: Low-High' },
 ];
-export const GENDER_OPTIONS = ['Men', 'Women', 'Kids'];
-export const CATEGORY_OPTIONS = ['All', 'Shose', 'Apparel', 'Accessories'];
+export const GENDER_OPTIONS = [ "single_bed",
+  "double_bed",
+  "attach_washroom",
+  "study_table",
+  "hot_water",
+  "drinking_water"];
+export const CATEGORY_OPTIONS = ['All', 'Boys', 'Girls'];
 export const RATING_OPTIONS = ['up4Star', 'up3Star', 'up2Star', 'up1Star'];
 export const PRICE_OPTIONS = [
   { value: 'below', label: 'Below $25' },
@@ -48,12 +54,23 @@ export const COLOR_OPTIONS = [
 // ----------------------------------------------------------------------
 
 export default function ProductFilters({ openFilter, onOpenFilter, onCloseFilter }) {
+  const [arrayCat, setarrayCat] = useState([]);
+  const handleFilter=(item)=>{
+    console.log(prevArrayCat => [...prevArrayCat, item])
+    setarrayCat(prevArrayCat => [...prevArrayCat, item])
+  }
+  useEffect(() => {
+  if(arrayCat){
+    console.log(arrayCat)
+  }
+  }, [arrayCat]);
   const renderGender = (
     <Stack spacing={1}>
       <Typography variant="subtitle2">Gender</Typography>
       <FormGroup>
         {GENDER_OPTIONS.map((item) => (
-          <FormControlLabel key={item} control={<Checkbox />} label={item} />
+          <FormControlLabel key={item} control={<Checkbox />} label={item} onClick={() => handleFilter(item)}
+          />
         ))}
       </FormGroup>
     </Stack>
@@ -64,7 +81,7 @@ export default function ProductFilters({ openFilter, onOpenFilter, onCloseFilter
       <Typography variant="subtitle2">Category</Typography>
       <RadioGroup>
         {CATEGORY_OPTIONS.map((item) => (
-          <FormControlLabel key={item} value={item} control={<Radio />} label={item} />
+          <FormControlLabel key={item} value={item} control={<Radio />} label={item} onClick={()=>console.log(item)} />
         ))}
       </RadioGroup>
     </Stack>
@@ -171,7 +188,7 @@ export default function ProductFilters({ openFilter, onOpenFilter, onCloseFilter
 
             {renderCategory}
 
-            {renderColors}
+            {/* {renderColors} */}
 
             {renderPrice}
 

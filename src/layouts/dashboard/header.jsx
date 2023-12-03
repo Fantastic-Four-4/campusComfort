@@ -6,6 +6,8 @@ import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import { useTheme } from '@mui/material/styles';
 import IconButton from '@mui/material/IconButton';
+import { jwtDecode } from 'jwt-decode';
+
 
 import { useResponsive } from '../../hooks/use-responsive';
 
@@ -18,10 +20,43 @@ import { NAV, HEADER } from './config-layout';
 import AccountPopover from './common/account-popover';
 import LanguagePopover from './common/language-popover';
 import NotificationsPopover from './common/notifications-popover';
+import { Close, Login } from '@mui/icons-material';
+import { useState } from 'react';
+import { useEffect } from 'react';
+import FormItem from 'antd/es/form/FormItem';
+import { Form } from 'react-router-dom';
+import { Button, Input, message } from 'antd';
+import { useDispatch, useSelector } from 'react-redux';
+import Hr from '../../molicule/buttonAutom/Hr';
+import { useCreateUserMutation } from '../../store/store';
+import { Product_name, logout, userLogin, userLogin_Google } from "../../store/mutation/userSlice";
+import { Login_show } from '../../store/mutation/remainingSlice';
+
 
 // ----------------------------------------------------------------------
-
+const LoginUser=(data,dispatch,userLogin)=>{
+  console.log(data)
+  dispatch(userLogin(data))
+  }
+  const RegisterUser=(data,createUser)=>{
+  console.log(data)
+  const {password,cpassword,...data1}=data
+  if(password!==cpassword){
+    message.error("Password Dont Match")
+  }else{
+    createUser(data)
+  }
+  }
 export default function Header({ onOpenNav }) {
+const [show_login_box, setShow_login_box] = useState(false);
+const dispatch=useDispatch()
+const {  login_show} = useSelector(
+  (state) => state.remaning
+);
+const {  userToken, user,loading, checkAuthLoading ,isAuthenticated,admin,adminToken} = useSelector(
+  (state) => state.user
+);
+
   const theme = useTheme();
 
   const lgUp = useResponsive('up', 'lg');
@@ -35,14 +70,18 @@ export default function Header({ onOpenNav }) {
       )}
 
       <Searchbar />
-
+  
       <Box sx={{ flexGrow: 1 }} />
 
       <Stack direction="row" alignItems="center" spacing={1}>
-        <LanguagePopover />
+        {/* <LanguagePopover /> */}
+ 
         <NotificationsPopover />
+        {userToken&&user?
         <AccountPopover />
+        :null }
       </Stack>
+{/* {login_show?<LoginBox/>:null} */}
     </>
   );
 

@@ -10,6 +10,9 @@ import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 
 import { account } from '../../../_mock/account';
+import { logout } from '../../../store/mutation/userSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { Button } from '@mui/material';
 
 // ----------------------------------------------------------------------
 
@@ -36,11 +39,13 @@ export default function AccountPopover() {
   const handleOpen = (event) => {
     setOpen(event.currentTarget);
   };
-
+  const {  userToken, user,loading, checkAuthLoading ,isAuthenticated,admin,adminToken} = useSelector(
+    (state) => state.user
+  );
   const handleClose = () => {
     setOpen(null);
   };
-
+const dispatch=useDispatch()
   return (
     <>
       <IconButton
@@ -85,10 +90,10 @@ export default function AccountPopover() {
       >
         <Box sx={{ my: 1.5, px: 2 }}>
           <Typography variant="subtitle2" noWrap>
-            {account.displayName}
+            {user?.name}
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
-            {account.email}
+            {user?.email}
           </Typography>
         </Box>
 
@@ -108,7 +113,10 @@ export default function AccountPopover() {
           onClick={handleClose}
           sx={{ typography: 'body2', color: 'error.main', py: 1.5 }}
         >
+          <Button sx={{color:"red"}} onClick={()=>dispatch(logout())}>
+
           Logout
+          </Button>
         </MenuItem>
       </Popover>
     </>

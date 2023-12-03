@@ -30,7 +30,7 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 // ----------------------------------------------------------------------
 
-export default function LoginView() {
+export default function AdminLogin() {
   const [show_login_box, setShow_login_box] = useState(false);
   const dispatch=useDispatch()
 const {  login_show} = useSelector(
@@ -216,7 +216,7 @@ navigate("/")
             maxWidth: 420,
           }}
         >
-          <Typography variant="h4">Sign in to Minimal</Typography>
+          <Typography variant="h4">Admin Sign in</Typography>
 
           <Typography variant="body2" sx={{ mt: 2, mb: 5 }}>
             Don’t have an account?
