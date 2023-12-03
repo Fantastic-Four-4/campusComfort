@@ -38,6 +38,7 @@ export default function Nav({ openNav, onCloseNav }) {
   }, [pathname]);
 
   const renderAccount = (
+    
     <Box
       sx={{
         my: 3,
@@ -79,22 +80,7 @@ export default function Nav({ openNav, onCloseNav }) {
           sx={{ width: 100, position: 'absolute', top: -50 }}
         />
 
-        <Box sx={{ textAlign: 'center' }}>
-          <Typography variant="h6">Get more?</Typography>
-
-          <Typography variant="body2" sx={{ color: 'text.secondary', mt: 1 }}>
-            From only $69
-          </Typography>
-        </Box>
-
-        <Button
-          href="https://material-ui.com/store/items/minimal-dashboard/"
-          target="_blank"
-          variant="contained"
-          color="inherit"
-        >
-          Upgrade to Pro
-        </Button>
+        
       </Stack>
     </Box>
   );
@@ -110,8 +96,13 @@ export default function Nav({ openNav, onCloseNav }) {
         },
       }}
     >
-      <Logo sx={{ mt: 3, ml: 4 }} />
+      {/* <Logo sx={{ mt: 3, ml: 4 }} /> */}
+      <Box sx={{ mt: 3, ml: 4 }} >
 
+      <h2 style={{position:"relative",width:"100px"}}>
+        CAMPUS <span style={{color:"teal"}}>COMFORTS</span>
+      </h2>
+      </Box>
       {renderAccount}
 
       {renderMenu}

@@ -37,13 +37,10 @@
     width: 100%;
     height: 100%;
     transition: transform 0.3s ease;
-    /* Add a smooth transition effect */
 }
 
 .zoom-image:hover {
     transform: scale(1.1);
-    /* Scale up the image by 10% on hover */
-
 }
 
 .card-container:hover {
@@ -124,7 +121,6 @@
         color: rgb(41, 45, 50);
         font-size: 15px;
         line-height: 16px;
-        /* margin-top: 16px; */
         font-family: Font-Book;
         margin: 0 10px;
 

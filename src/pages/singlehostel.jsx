@@ -1,22 +1,41 @@
 import { useParams } from "react-router-dom";
 import React, { useState } from 'react';
 import Carousel from 'react-material-ui-carousel'
-//import Item from './Item';
-// import img1 from '../assets/Web_Banner_1_Desktop.webp';
-// import img2 from '../assets/Web_Banner_2_Desktop.webp';
-// import img3 from '../assets/Web_Banner_3_Desktop.webp';
 import img1 from "/assets/images/products/product_1.jpg"
 import img2 from "/assets/images/products/product_2.jpg"
 import img3 from "/assets/images/products/product_3.jpg"
-import { Container, Grid, Paper, Box } from '@mui/material'
-
-// import TextField from '@mui/material';
-// import Button from '@mui/material';
-// import { makeStyles } from '@mui/material';
+import { Container, Grid, Paper, Box, Typography, Chip, StepLabel } from '@mui/material'
+import { Button } from '@mui/material';
+import Drawer from '@mui/material/Drawer';
+import { hostel } from "src/_mock/products";
+import "../forms.css"
+import { MapComponent } from "src/components/map/MapComponent";
 
 const SingleHostel = () => {
     const [clicked, setClicked] = useState(0)
     const { hostelId } = useParams();
+
+    const [state, setState] = useState({
+        top: false,
+        left: false,
+        bottom: false,
+        right: false,
+    });
+
+    const toggleDrawer = (anchor, open) => (event) => {
+        if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+            return;
+        }
+
+        setState({ ...state, [anchor]: open });
+    };
+
+    function getHostelDetails(hostels, hostelId) {
+        return hostels.find((h) => h.id == hostelId);
+    }
+
+    const thisHostel = getHostelDetails(hostel, hostelId);
+    const { name, address, gender, price, distance, eqp, beds } = thisHostel || {};
     const Slider = [
         {
             "id": 1,
@@ -43,92 +62,158 @@ const SingleHostel = () => {
         )
     }
 
-    // const useStyles = makeStyles((theme) => ({
-    //     formContainer: {
-    //       border: '1px solid #ccc',
-    //       borderRadius: '4px',
-    //       padding: '20px',
-    //       width: '300px', // or your desired width
-    //       margin: 'auto', // center the form horizontally
-    //     },
-    //     formElement: {
-    //       marginBottom: theme.spacing(2), // space out the form elements
-    //     },
-    //   }));
-      
 
-    // function SheduleVisitContent() {
-    //     const classes = useStyles();
-    //     return (
-    //         <div className={classes.formContainer}>
-    //   <form noValidate autoComplete="off">
-    //     <TextField
-    //       className={classes.formElement}
-    //       label="Name"
-    //       variant="outlined"
-    //       fullWidth
-    //     />
-    //     <TextField
-    //       className={classes.formElement}
-    //       label="Mobile Number"
-    //       variant="outlined"
-    //       fullWidth
-    //     />
-    //     <Button
-    //       className={classes.formElement}
-    //       variant="contained"
-    //       color="primary"
-    //       type="submit"
-    //     >
-    //       Schedule a Visit
-    //     </Button>
-    //   </form>
-    //   </div>
-    //     )
-    // }
+    function SheduleVisitContent() {
+        console.log(hostelId);
+        console.log(hostel);
+        console.log(thisHostel);
+        return (
+            <div className="row">
+                <div className="col-md-12">
+                    <form onSubmit={() => alert("Details Submitted")}>
+                        <fieldset>
+
+                            <legend><span className="number">1</span> Your Info</legend>
+
+                            <label for="name">Name:</label>
+                            <input type="text" id="name" name="user_name" />
+
+                            <label for="email">Phone Number:</label>
+                            <input type="text" id="mail" name="user_email" />
+
+                            <button type="submit" className="call-btn">Schedule Call</button>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        );
+    }
+
+    function ReserveNow() {
+        return (
+            <div className="row">
+                <div className="col-md-12">
+                    <form onSubmit={() => alert("Details Submitted")}>
+                        <fieldset>
+
+                            <legend><span className="number">1</span> Your Info</legend>
+
+                            <label for="name">Name:</label>
+                            <input type="text" id="name" name="user_name" />
+
+                            <label for="email">Phone Number:</label>
+                            <input type="text" id="mail" name="user_email" />
+
+                            <label for="code">Enter Referral Code(Optional):</label>
+                            <input type="text" id="code" name="user_code" />
+
+                        </fieldset>
+
+
+                        <button type="submit" className="reserve-btn">Reserve Now</button>
+
+                    </form>
+                </div>
+            </div>
+        )
+    }
+
+    const list = (anchor) => (
+        <Box
+            sx={{ width: 500 }}
+            role="presentation"
+            onClick={toggleDrawer(anchor, false)}
+            onKeyDown={toggleDrawer(anchor, false)}
+        >
+            <div>
+        <MapComponent address={address} />
+      </div>
+        </Box>
+    );
 
     return (
 
-        <Grid container spacing={10}>
-            <Grid item xs={12} sm={6} md={6}>
-                <Carousel>
-                    {Slider.map(item => {
-                        console.log(item.image);
-                        console.log(item.id);
-                        return <Item key={item.id} item={item} />;
-                    })}
-                </Carousel>
-            </Grid>
+        <div>
+            <Grid container spacing={10}>
+                <Grid item xs={12} sm={6} md={6}>
+                    <Box>
+                        <Typography variant="h3">{name}</Typography>
+                        <Typography>{address}</Typography>
+                    </Box>
+                    <Carousel>
+                        {Slider.map(item => {
+                            return <Item key={item.id} item={item} />;
+                        })}
+                    </Carousel>
+                </Grid>
 
-            <Grid item xs={12} sm={5} md={5}>
-                <Box display="flex" gap={2}>
-                    <Box flex={1}>
-                        <button className='card-btn1' type='button'
-                            onClick={() => setClicked(0)}
-                        >SCHEDULE A VISIT</button>
+                <Grid item xs={12} sm={5} md={5}>
+                    <div>
+                        {['right'].map((anchor) => (
+                            <React.Fragment key={anchor}>
+                                <Button onClick={toggleDrawer(anchor, true)}
+                                style={{
+                                    marginLeft: "19rem",
+                                    marginTop: "3rem"
+                                }}
+                                >Show Map</Button>
+                                <Drawer
+                                    anchor={anchor}
+                                    open={state[anchor]}
+                                    onClose={toggleDrawer(anchor, false)}
+                                >
+                                    {list(anchor)}
+                                </Drawer>
+                            </React.Fragment>
+                        ))}
+                    </div>
+                    <Box display="flex" gap={2}
+                        style={{ marginTop: "1rem" }}
+                    >
+                        <Box flex={1}>
+                            <button className='card-btn1' type='button'
+                                onClick={() => setClicked(0)}
+                            >SCHEDULE A VISIT</button>
+                        </Box>
+                        <Box flex={1}>
+                            <button className='card-btn2' type='button'
+                                onClick={() => setClicked(1)}
+                            >REQUEST A CALLBACK</button>
+                        </Box>
                     </Box>
-                    <Box flex={1}>
-                        <button className='card-btn2' type='button'
-                            onClick={() => setClicked(1)}
-                        >REQUEST A CALLBACK</button>
-                    </Box>
-                </Box>
-                {/* {clicked === 0? <SheduleVisitContent/>: <h1>Shut up</h1>} */}
+                    {clicked === 0 ? <SheduleVisitContent /> : <ReserveNow />}
+                </Grid>
             </Grid>
-        </Grid>
+            <div>
+                <Grid container spacing={10}>
+                    <Grid item sm={6} md={6}>
+                        <Typography variant="h4">Starts from Rs.
+                            <strong style={{ fontSize: "2.5rem" }}>{price}/</strong>
+                            mo
+                        </Typography>
+                    </Grid>
+                    <Grid item sm={5} md={5}>
+                        <Typography variant="h3">Features</Typography>
+                        <Box display="flex" flexDirection={"column"}>
+                            <Box flex={1}>
+                                <Typography variant="h4">Amenities</Typography>
+                                {eqp?.map((e) => (<Chip label={e} style={{ fontSize: "1rem" }} />))}
+                            </Box>
+                            <Box flex={1}>
+                                <Typography variant="h4">Beds</Typography>
+                                <Chip label={beds} style={{ fontSize: "1rem" }} />
+                            </Box>
+                            <Box flex={1}>
+                                <Typography variant="h4">Suitable For</Typography>
+                                <Chip label={gender} style={{ fontSize: "1rem" }} />
+                            </Box>
+                        </Box>
+                    </Grid>
+                </Grid>
+            </div>
+        </div>
     );
 }
 
-
-
-
-
-//export default Example;
-// const SingleHostel = () => {
-//     const {hostelId} = useParams();
-//     return (
-//         <div>{hostelId}</div>
-//     )
-// }
 
 export { SingleHostel };

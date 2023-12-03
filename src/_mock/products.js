@@ -87,8 +87,8 @@ export const hostel = [
   {
     id: uuid(),
     name: "Modern Hostel",
-    image: `/assets/images/products/product_1.jpg`,
-    address: "Annapurna Nagar",
+    image: `/assets/images/products/hostelimg.jpg`,
+    address: "Annapurna Nagar, Kopargaon",
     gender: "Female",
     price: 2000,
     distance: 1,
@@ -98,8 +98,8 @@ export const hostel = [
   {
     id: uuid(),
     name: "College Hostel",
-    image: `/assets/images/products/product_2.jpg`,
-    address: "Sanjivani College",
+    image: `/assets/images/products/hostelimg.jpg`,
+    address: "Sanjivani College of Engineering, Kopargaon",
     gender: "Male",
     price: 2500,
     distance: 0.2,
@@ -109,8 +109,8 @@ export const hostel = [
   {
     id: uuid(),
     name: "Laxmi Girls Hostel",
-    image: `/assets/images/products/product_3.jpg`,
-    address: "Yeola Naka",
+    image: `/assets/images/products/hostelimg.jpg`,
+    address: "Yeola Naka, Kopargaon",
     gender: "Female",
     price: 3000,
     distance: 1.5,
