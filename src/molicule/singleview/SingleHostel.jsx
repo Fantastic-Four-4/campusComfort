@@ -8,6 +8,7 @@ import { Container, Grid, Paper, Box, Typography, Chip, StepLabel } from '@mui/m
 import { Button } from '@mui/material';
 import Drawer from '@mui/material/Drawer';
 import { MapComponent } from "./MapComponent";
+import axios from "axios";
 // import { MapComponent } from "src/components/map/MapComponent";
 const hostel = [
     {
@@ -56,7 +57,42 @@ const SingleHostel = () => {
         bottom: false,
         right: false,
     });
-
+    const checkoutHandler = async (amount) => {
+        try {
+            const { data: { key } } = await axios.get("http://www.localhost:4000/api/getkey")
+        
+            const { data: { order } } = await axios.post("http://localhost:4000/api/checkout", {
+                amount
+            })
+        
+            const options = {
+                key,
+                amount: order.amount,
+                currency: "INR",
+                name: "CampusComforts",
+                description: "Tutorial of RazorPay",
+                image: "https://avatars.githubusercontent.com/u/25058652?v=4",
+                order_id: order.id,
+                callback_url: "http://localhost:4000/api/paymentverification",
+                prefill: {
+                    name: "Harshalini Pandhare",
+                    email: "harshalini@gmail.com",
+                    contact: "9999999999"
+                },
+                notes: {
+                    "address": "Razorpay Corporate Office"
+                },
+                theme: {
+                    "color": "#121212"
+                }
+            };
+            const razor = new window.Razorpay(options);
+            razor.open();
+        } catch (error) {
+            console.log("lion",error)
+        }
+              
+            }
     const toggleDrawer = (anchor, open) => (event) => {
         if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
             return;
@@ -220,6 +256,9 @@ const SingleHostel = () => {
                 </Grid>
             </Grid>
             <div>
+            <Button onClick={()=>checkoutHandler(2000)}>
+                        Pay 1000 Rs
+                    </Button>
                 <Grid container spacing={10}>
                     <Grid item sm={6} md={6}>
                         <Typography variant="h4">Starts from Rs.
@@ -227,6 +266,7 @@ const SingleHostel = () => {
                             mo
                         </Typography>
                     </Grid>
+                    
                     <Grid item sm={5} md={5}>
                         <Typography variant="h3">Features</Typography>
                         <Box display="flex" flexDirection={"column"}>
