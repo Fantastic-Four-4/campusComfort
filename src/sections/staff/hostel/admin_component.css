@@ -1,0 +1,28 @@
+.ant-table-thead tr th{
+    background-color: var(--primary-color)!important;
+    color: white!important;
+}
+.create-product-input-from{
+    width: 200px;
+    /* width: 100%; */
+}
+.ant-form-item-row{
+    /* justify-content: space-between; */
+}
+.create-product-select-from{
+    width: 200px!important;
+}
+.form-list-admin-highlights-add .ant-row{
+    /* width: 100%;
+     */
+     justify-content: center;
+}
+.formitem-staff .ant-form-item-row{
+    justify-content: space-between;
+}
+.admin-select-product{
+    margin: 20px 0px;
+}
+.admin-select-product div{
+    margin-right: 20px ;
+}

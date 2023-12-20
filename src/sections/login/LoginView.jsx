@@ -42,7 +42,7 @@ const {  userToken, user,loading, checkAuthLoading ,isAuthenticated,admin,adminT
 const navigate=useNavigate()
 useEffect(() => {
 if(userToken&&user&&isAuthenticated){
-navigate("/")
+navigate("/hostels")
 }
 }, [userToken,user,isAuthenticated]);
   const [isGoogleApiLoaded, setIsGoogleApiLoaded] = useState(false);
@@ -198,6 +198,7 @@ navigate("/")
           imgUrl: '/assets/background/overlay_4.jpg',
         }),
         height: 1,
+        marginBottom:"80px"
       }}
     >
       <Logo

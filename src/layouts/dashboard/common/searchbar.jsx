@@ -11,6 +11,8 @@ import ClickAwayListener from '@mui/material/ClickAwayListener';
 import { bgBlur } from '../../../theme/css';
 
 import Iconify from '../../../components/iconify';
+import { useDispatch } from 'react-redux';
+import { Hostel_page, Product_name } from '../../../store/mutation/userSlice';
 
 // ----------------------------------------------------------------------
 
@@ -45,13 +47,20 @@ export default function Searchbar() {
   const handleOpen = () => {
     setOpen(!open);
   };
-
+const dispatch=useDispatch()
   const handleClose = () => {
+    dispatch(Product_name(textVlaue))
+    dispatch(Hostel_page(1))
+    console.log("lion")
     setOpen(false);
   };
+  const handleClose2 = () => {
 
+    setOpen(false);
+  };
+const [textVlaue, setTextVlaue] = useState("");
   return (
-    <ClickAwayListener onClickAway={handleClose}>
+    <ClickAwayListener onClickAway={handleClose2}>
       <div>
         {!open && (
           <IconButton onClick={handleOpen}>
@@ -64,6 +73,8 @@ export default function Searchbar() {
             <Input
               autoFocus
               fullWidth
+              value={textVlaue}
+              onChange={(e)=>setTextVlaue(e.target.value)}
               disableUnderline
               placeholder="Search…"
               startAdornment={
@@ -76,7 +87,7 @@ export default function Searchbar() {
               }
               sx={{ mr: 1, fontWeight: 'fontWeightBold' }}
             />
-            <Button variant="contained" onClick={handleClose}>
+            <Button variant="contained" onClick={()=>handleClose()}>
               Search
             </Button>
           </StyledSearchbar>

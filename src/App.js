@@ -14,9 +14,14 @@ import BlogPage from "./pages/blog";
 import LoginPage from "./pages/login";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { getUser } from "./store/mutation/userSlice";
+import { getAdmin, getUser } from "./store/mutation/userSlice";
 import Auth from "./store/Auth";
 import AdminLogin from "./sections/login/AdminLogin";
+import Authforadmin from "./store/Authforadmin";
+import CreateHostel from "./ADMIN/CreateHostel";
+import Staff from "./sections/staff/Staff";
+import Hostel from "./sections/staff/hostel/Hostel";
+import Footer from "./sections/Footer";
 
 function App() {
   useScrollToTop();
@@ -26,7 +31,7 @@ function App() {
   );
   useEffect(() => {
     dispatch(getUser());
-    // dispatch(getAdmin());
+    dispatch(getAdmin());
   }, []);
   return (
     <div>
@@ -36,16 +41,47 @@ function App() {
       <ThemeProvider>
         <DashboardLayout>
           <Routes>
-            <Route path="/" element={<IndexPage />} />
+            <Route path="/" element={
+            <Authforadmin>
+
+              <IndexPage />
+            </Authforadmin>
+            } />
+            <Route path="/createHostel/:id" element={
+            <Authforadmin>
+
+              <CreateHostel />
+            </Authforadmin>
+            } />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/admin-login" element={<AdminLogin />} />
-            <Route path="/hostels" element={<ProductsPage />} />
-            <Route path="/singlehostel/:hostelId" element={<SingleHostel />} />
+            <Route path="/hostels" element={
+            // <Auth>
+
+              <ProductsPage />
+            // </Auth>
+            } />
+            <Route path="/singlehostel/:id" element={
+            <Auth>
+
+              <SingleHostel />
+            </Auth>
+            } />
+            <Route path="/staff" element={
+            // <Auth>
+
+              <Staff/>
+            // </Auth>
+            } />
+            <Route path="/admin_hostel" element={
+            // <Auth>
+
+              <Hostel/>
+            // </Auth>
+            } />
             <Route path="/blog" element={
-              <Auth>
 
             <BlogPage />
-              </Auth>
           } />
             <Route path="*" element={<Page404 />} />
           </Routes>

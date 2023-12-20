@@ -33,7 +33,7 @@ function Authforadmin({ children }) {
     );
 
   if ( !adminToken||admin===false||!adminToken) {
-    return <Navigate to={"/adminlogin"} />;
+    return <Navigate to={"/admin-login"} />;
   }
   // if(is_staff!=='beta'){
   //   message.error('You Are Not Authorised')

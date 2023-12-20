@@ -25,7 +25,7 @@ import FormItem from 'antd/es/form/FormItem';
 import { useCreateUserMutation } from '../../store/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { Login_show } from '../../store/mutation/remainingSlice';
-import { userLogin, userLogin_Google } from '../../store/mutation/userSlice';
+import { adminLogin, userLogin, userLogin_Google } from '../../store/mutation/userSlice';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 // ----------------------------------------------------------------------
@@ -36,15 +36,15 @@ export default function AdminLogin() {
 const {  login_show} = useSelector(
   (state) => state.remaning
 );
-const {  userToken, user,loading, checkAuthLoading ,isAuthenticated,admin,adminToken} = useSelector(
+const {  userToken, user,loading,admin_user, checkAuthLoading ,isAuthenticated,admin,adminToken} = useSelector(
   (state) => state.user
 );
 const navigate=useNavigate()
 useEffect(() => {
-if(userToken&&user&&isAuthenticated){
+if(adminToken&&admin_user){
 navigate("/")
 }
-}, [userToken,user,isAuthenticated]);
+}, [adminToken,admin_user]);
   const [isGoogleApiLoaded, setIsGoogleApiLoaded] = useState(false);
 
   const handleCallBack = (res) => {
@@ -107,7 +107,7 @@ navigate("/")
     // router.push('/dashboard');
   };
   const LoginFun=(data)=>{
-    dispatch(userLogin(data))
+    dispatch(adminLogin(data))
   }
   const RegisterFun=(data)=>{
     if(data.password!==data.cpassword){
@@ -198,6 +198,8 @@ navigate("/")
           imgUrl: '/assets/background/overlay_4.jpg',
         }),
         height: 1,
+        marginBottom:"80px"
+
       }}
     >
       <Logo
@@ -218,19 +220,8 @@ navigate("/")
         >
           <Typography variant="h4">Admin Sign in</Typography>
 
-          <Typography variant="body2" sx={{ mt: 2, mb: 5 }}>
-            Don’t have an account?
-            <Link variant="subtitle2" onClick={()=>setShow_login_box(!show_login_box)} sx={{ ml: 0.5 ,cursor:"pointer"}}>
-              {show_login_box?<>
-                Already Have Account
-              </>
-:<>
-              Get started
-</>
-              }
-            </Link>
-          </Typography>
-          <div id="signInDiv"></div>
+       
+          {/* <div id="signInDiv"></div> */}
 
           <Divider sx={{ my: 3 }}>
             <Typography variant="body2" sx={{ color: 'text.secondary' }}>

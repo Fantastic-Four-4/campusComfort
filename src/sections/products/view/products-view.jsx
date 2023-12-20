@@ -109,17 +109,18 @@ export default function ProductsView() {
 const handlePageChange=(data)=>{
   dispatch(Hostel_page(data))
 }
-  const { user, adminToken, loading, admin,hostel_page } = useSelector(
+  const { distance,user, adminToken, loading, admin,hostel_page,hostel_name,filter_obj,allowed_for } = useSelector(
     (state) => state.user
   );
   const filter=""
-  const hostel_name=""
+
   const {
     data: data,
     isLoading: hostel_loading,
     isFetching: fetch,
     error: error,
-  } = useFetchHostelQuery({  hostel_page,filter,hostel_name ,limit:itemsPerPage});
+  } = useFetchHostelQuery({ distance:distance, hostel_page,filter,hostel_name ,limit:itemsPerPage,filter_obj:filter_obj,allowed_for});
+
   const [openFilter, setOpenFilter] = useState(false);
 
   const handleOpenFilter = () => {
@@ -133,7 +134,7 @@ const handlePageChange=(data)=>{
   return (
     <Container>
       <Typography variant="h4" sx={{ mb: 5 }}>
-        Products
+        Hostels
       </Typography>
 
       <Stack

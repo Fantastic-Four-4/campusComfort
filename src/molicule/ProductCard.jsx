@@ -6,6 +6,7 @@ import Typography from '@mui/material/Typography';
 import { Link } from 'react-router-dom';
 import "./hostelcard.css"
 import "./card.css"
+import { capitalizeFirstLetter } from '../atoms/State';
 // ----------------------------------------------------------------------
 
 export default function ShopProductCard({ hostel }) {
@@ -23,6 +24,20 @@ export default function ShopProductCard({ hostel }) {
       }}
     />
   );
+  const renderImg2 = (
+    <Box className='zoom-img'
+      component="img"
+      alt={hostel?.hostel_name}
+      src={hostel?.hostel_img}
+      sx={{
+        top: 0,
+        width: 1,
+        height: 1,
+        objectFit: 'cover',
+        position: 'absolute',
+      }}
+    />
+  );
 
   return (
     <Link to={`/singleHostel/${hostel._id}`}
@@ -31,14 +46,19 @@ export default function ShopProductCard({ hostel }) {
     }}
     >
     <Card sx={{ width: '100%', maxWidth: '350px' }}>
-      <Box sx={{ position: 'relative', height: "300px" }}>
-
+      <Box sx={{ position: 'relative', height: "400px" }}>
+      {hostel?.hostel_img?<>
+      {renderImg2}
+      </>:
+<>
         {renderImg}
+</>
+}
       </Box>
       <Stack spacing={2} sx={{ p: 3 }}>
         <Box display="flex" flexDirection="row" justifyContent="space-between">
           <Box display="flex" flexDirection="column">
-            <Typography variant='h4'>{hostel?.hostel_name}</Typography>
+            <Typography variant='h4'>{capitalizeFirstLetter(hostel?.hostel_name)}</Typography>
             <Typography>{hostel?.hostel_address}</Typography>
           </Box>
           <Box display="flex" flexDirection="column">
@@ -68,6 +88,7 @@ export default function ShopProductCard({ hostel }) {
           </div>
         </div>
         <div className="details">
+        
           <img src="https://th.bing.com/th/id/OIP.SNRWR7GfIRZZi7VnK5oLLgHaEK?rs=1&pid=ImgDetMain" className='gender-icon' alt="" srcSet="" />
           <p>{hostel?.allowed_for}</p>
           <div className='separator' />

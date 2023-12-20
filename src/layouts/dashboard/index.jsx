@@ -6,6 +6,7 @@ import Box from '@mui/material/Box';
 import Nav from './nav';
 import Main from './main';
 import Header from './header';
+import Footer from '../../sections/Footer';
 
 // ----------------------------------------------------------------------
 
@@ -25,8 +26,10 @@ export default function DashboardLayout({ children }) {
       >
         <Nav openNav={openNav} onCloseNav={() => setOpenNav(false)} />
 
-        <Main>{children}</Main>
+        <Main style={{paddingRight:"10px",paddingLeft:"10px"}}>{children}</Main>
+
       </Box>
+        <Footer/>
     </>
   );
 }

@@ -22,4 +22,15 @@ export {
   useDummyRunMutation,
 
   useFetchHostelQuery,
+  useGetMyHostelQuery,
+  useCreateHostelMutation,
+  useUpdateHostelMutation,
+  useDeleteHostelMutation,
+
+  
+  useFetchStaffQuery,
+  useCreateStaffMutation,
+  useUpdateStaffMutation,
+  useDeleteStaffMutation,
+
 } from "./mutation/AllApi";

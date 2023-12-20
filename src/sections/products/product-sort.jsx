@@ -30,7 +30,7 @@ export default function ShopProductSort() {
 
   return (
     <>
-      <Button
+      {/* <Button
         disableRipple
         color="inherit"
         onClick={handleOpen}
@@ -40,7 +40,7 @@ export default function ShopProductSort() {
         <Typography component="span" variant="subtitle2" sx={{ color: 'text.secondary' }}>
           Newest
         </Typography>
-      </Button>
+      </Button> */}
 
       <Menu
         open={!!open}

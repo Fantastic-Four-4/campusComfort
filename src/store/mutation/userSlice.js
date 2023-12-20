@@ -71,9 +71,6 @@ export const adminLogin = createAsyncThunk(
   }
 );
 
-
-
-
 export const userLogin_Google = createAsyncThunk(
   "user/login",
   async (GToken, thunkAPI) => {
@@ -105,7 +102,6 @@ export const userLogin_Google = createAsyncThunk(
   }
 );
 
-
 //user get as well as verify
 export const getUser = createAsyncThunk(
   "api/account/me",
@@ -125,10 +121,9 @@ export const getUser = createAsyncThunk(
       if (res.status === 200) {
         return { ...data };
       } else {
-if(data.message==="Blocked"){
-
-  message.error("You Are Blocked")
-}
+        if (data.message === "Blocked") {
+          message.error("You Are Blocked");
+        }
         localStorage.removeItem("userToken");
         localStorage.removeItem("refreshToken");
         localStorage.removeItem("user");
@@ -146,7 +141,6 @@ if(data.message==="Blocked"){
     }
   }
 );
-
 
 export const getAdmin = createAsyncThunk(
   "api/account/admin",
@@ -190,35 +184,34 @@ export const getAdmin = createAsyncThunk(
 //     }
 //   }
 // );
-const hostel_page = 'hostel_page';
-const order_page = 'order_page';
-const review_page = 'review_page';
-const user_page = 'user_page';
+const hostel_page = "hostel_page";
+const order_page = "order_page";
+const review_page = "review_page";
+const user_page = "user_page";
 export const Hostel_page = (newPage) => {
   return {
     type: hostel_page,
-    payload: newPage
+    payload: newPage,
   };
 };
 export const Order_page = (newPage) => {
   return {
     type: order_page,
-    payload: newPage
+    payload: newPage,
   };
 };
 export const Review_page = (newPage) => {
   return {
     type: review_page,
-    payload: newPage
+    payload: newPage,
   };
 };
 export const User_page = (newPage) => {
   return {
     type: user_page,
-    payload: newPage
+    payload: newPage,
   };
 };
-
 
 export const Product_name = createAsyncThunk(
   "product_name",
@@ -246,30 +239,37 @@ export const Sort_product = createAsyncThunk(
     }
   }
 );
+
 export const Filter_obj = createAsyncThunk(
   "filter_obj",
   async (username, thunkAPI) => {
     try {
-      // configure header's Content-Type as JSON
-      let i = 0;
-      while (i < username.length && (username[i] === '&' || username[i] === '=')) {
-          i++;
-      }
-      
-      const cleanedUsername = username.substring(i);
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth", // You can use "smooth" for smooth scrolling or "auto" for instant scrolling
-      });
-      
-      console.log("USER SLICE",cleanedUsername);
-      return "&"+cleanedUsername;
+      return username;
     } catch (err) {
       return thunkAPI.rejectWithValue(err);
     }
   }
 );
-
+export const AllowedFor = createAsyncThunk(
+  "AllowedFor",
+  async (username, thunkAPI) => {
+    try {
+      return username;
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err);
+    }
+  }
+);
+export const Distance = createAsyncThunk(
+  "Distance",
+  async (username, thunkAPI) => {
+    try {
+      return username;
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err);
+    }
+  }
+);
 
 // initialize userToken from local storage
 const userToken = localStorage.getItem("userToken", "role")
@@ -278,24 +278,26 @@ const userToken = localStorage.getItem("userToken", "role")
 
 const initialState = {
   loading: true,
-  admin_loading:true,
+  admin_loading: true,
   user: null,
   admin_user: null,
   userToken: localStorage.getItem("userToken"),
-  adminToken:localStorage.getItem("adminToken"),
+  adminToken: localStorage.getItem("adminToken"),
   admin: false,
   isAuthenticated: false,
   error: null,
   loginStatus: "",
   loginError: "",
   hostel_page: 1,
-  order_page:1,
+  order_page: 1,
   user_page: 1,
   review_page: 1,
-  product_name:"",
-  filter_obj:"&",
-  sort_product:-1,
-
+  product_name: "",
+  filter_obj: "&",
+  allowed_for: "",
+  sort_product: -1,
+  hostel_name: "",
+  distance:"",
 };
 
 const userSlice = createSlice({
@@ -315,21 +317,22 @@ const userSlice = createSlice({
         userToken: "",
         adminToken: "",
         user: "",
-        admin_user:"",
+        admin_user: "",
         loading: false,
-        admin_loading:false,
+        admin_loading: false,
         isAuthenticated: false,
         userToken: "",
         hostel_page: 1,
         user_page: 1,
-        admin:false,
-        product_name:"",
-        filter_obj:"&",
-        order_page:1,
-        sort_product:-1,
+        admin: false,
+        product_name: "",
+        filter_obj: "&",
+        order_page: 1,
+        sort_product: -1,
+        allowed_for: "",
 
-
-
+        hostel_name: "",
+  distance:"",
 
       };
     },
@@ -341,7 +344,6 @@ const userSlice = createSlice({
         state.loading = true;
       })
       .addCase(userLogin.fulfilled, (state, { payload }) => {
-
         state.loading = false;
         state.isAuthenticated = true;
         state.userToken = payload.token;
@@ -355,19 +357,17 @@ const userSlice = createSlice({
 
       .addCase(adminLogin.pending, (state, action) => {
         state.admin_loading = true;
-
       })
       .addCase(adminLogin.fulfilled, (state, { payload }) => {
         state.admin_loading = false;
         state.adminToken = payload.token;
-        state.admin=true
+        state.admin = true;
       })
       .addCase(adminLogin.rejected, (state, { payload }) => {
         state.admin_loading = false;
         state.error = payload;
         state.adminToken = "";
-        state.admin=false
-
+        state.admin = false;
       })
 
       //   get user
@@ -389,23 +389,21 @@ const userSlice = createSlice({
         state = action.payload;
       })
       .addCase(getAdmin.pending, (state) => {
-        state.admin_loading= true;
-
+        state.admin_loading = true;
       })
       .addCase(getAdmin.fulfilled, (state, action) => {
-        state.admin_loading= false;
-        state.admin=true;
+        state.admin_loading = false;
+        state.admin = true;
         state.admin_user = action.payload;
 
         // state.user = action.payload;
       })
       .addCase(getAdmin.rejected, (state, action) => {
-        state.admin_loading= false;
+        state.admin_loading = false;
         state.adminToken = "";
-        state.admin=false;
+        state.admin = false;
         state = action.payload;
       })
-
 
       .addCase(hostel_page, (state, action) => {
         state.hostel_page = action.payload;
@@ -420,19 +418,21 @@ const userSlice = createSlice({
         state.user_page = action.payload;
       })
 
-
-
       .addCase(Product_name.fulfilled, (state, action) => {
-        state.product_name = action.payload;
+        state.hostel_name = action.payload;
       })
       .addCase(Filter_obj.fulfilled, (state, action) => {
         state.filter_obj = action.payload;
       })
+      .addCase(AllowedFor.fulfilled, (state, action) => {
+        state.filter_obj = action.payload;
+      })
+      .addCase(Distance.fulfilled, (state, action) => {
+        state.distance = action.payload;
+      })
       .addCase(Sort_product.fulfilled, (state, action) => {
         state.sort_product = action.payload;
-      })
-    
- 
+      });
   },
 });
 // export default userSlice.reducer;

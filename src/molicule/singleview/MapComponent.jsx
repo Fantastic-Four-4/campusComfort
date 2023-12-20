@@ -28,6 +28,7 @@ export function MapComponent({ address }) {
       <SetViewOnClick coords={location} />
       <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
       <Marker position={location}></Marker>
+      
     </MapContainer>
   );
 }

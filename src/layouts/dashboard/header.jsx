@@ -76,7 +76,7 @@ const {  userToken, user,loading, checkAuthLoading ,isAuthenticated,admin,adminT
       <Stack direction="row" alignItems="center" spacing={1}>
         {/* <LanguagePopover /> */}
  
-        <NotificationsPopover />
+        {/* <NotificationsPopover /> */}
         {userToken&&user?
         <AccountPopover />
         :null }

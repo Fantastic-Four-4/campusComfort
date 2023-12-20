@@ -210,3 +210,29 @@
     justify-content: space-between;
     align-items: center;
 }
+
+/* StarRating.css */
+.star-rating {
+    display: inline-block;
+    font-size: 1.2rem;
+    color: #ffd700; /* Set the default color for the stars */
+    position: relative;
+  }
+  
+  .star-rating::before {
+    content: '\2605'; /* Unicode character for a solid star */
+  }
+  
+  .star-rating::after {
+    content: '\2605'; /* Unicode character for a solid star */
+    position: absolute;
+    overflow: hidden;
+    width: calc(var(--rating) - 0.2) * 1em; /* Adjust the width based on the fractional part */
+    color: transparent; /* Make the fractional part transparent */
+  }
+  
+  /* Add more styles for different fractional ratings if needed */
+
+  .model-custom-img{
+    width: 100%!important;
+  }

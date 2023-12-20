@@ -1,0 +1,37 @@
+.animated-file-input {
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+    font-size: 16px;
+    color: #fff;
+    background-color: var(--pr-text-color);
+    border: none;
+    border-radius: 5px;
+    padding: 3px 12px;
+    overflow: hidden;
+    transition: background-color 0.3s;
+  }
+  
+  .animated-file-input:hover {
+    background-color: #565555;
+  }
+  
+  .file-label {
+    display: block;
+    width: 100%;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .hidden-input {
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+  }
+  

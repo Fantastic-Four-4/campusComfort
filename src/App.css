@@ -7,3 +7,7 @@
 .input-form-cus{
   margin: 0px !important;
 }
+
+:root{
+  --pr-text-color:teal;
+}
