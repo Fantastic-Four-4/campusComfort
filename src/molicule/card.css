@@ -141,9 +141,10 @@
     align-items: center;
 }
 .gender-icon{
-    height: 30px;
-    width: 30px;
-    margin-right: 8px;
+    height: 40px;
+    width: 40px;
+border-radius: 360px;
+        margin-right: 8px;
 }
 
 .separator {

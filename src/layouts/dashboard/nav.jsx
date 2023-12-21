@@ -36,11 +36,11 @@ const icon = (name) => (
 );
 // ----------------------------------------------------------------------
 const navConfig = [
-  {
-    title: "user",
-    path: "/user",
-    icon: icon("ic_user"),
-  },
+  // {
+  //   title: "user",
+  //   path: "/user",
+  //   icon: icon("ic_user"),
+  // },
   {
     title: "hostels",
     path: "/hostels",
@@ -59,11 +59,11 @@ const navConfig = [
   },
 ];
 const navConfigloggedOUT = [
-  {
-    title: "user",
-    path: "/user",
-    icon: icon("ic_user"),
-  },
+  // {
+  //   title: "user",
+  //   path: "/user",
+  //   icon: icon("ic_user"),
+  // },
   {
     title: "hostel",
     path: "/hostels",
@@ -103,6 +103,39 @@ export default function Nav({ openNav, onCloseNav }) {
       path: `/createHostel/${admin_user?._id}`,
       icon: icon("ic_analytics"),
     },
+    // {
+    //   title: "staff",
+    //   path: "/staff",
+    //   icon: icon("ic_user"),
+    // },
+    // {
+    //   title: "Hostel List",
+    //   path: "/admin_hostel",
+    //   icon: icon("ic_user"),
+    // },
+    // {
+    //   title: "user",
+    //   path: "/user",
+    //   icon: icon("ic_user"),
+    // },
+  
+    // {
+    //   title: "blog",
+    //   path: "/blog",
+    //   icon: icon("ic_blog"),
+    // },
+  ];
+  const navConfigAdminSuper = [
+    {
+      title: "dashboard",
+      path: "/",
+      icon: icon("ic_analytics"),
+    },
+    // {
+    //   title: "My Hostel",
+    //   path: `/createHostel/${admin_user?._id}`,
+    //   icon: icon("ic_analytics"),
+    // },
     {
       title: "staff",
       path: "/staff",
@@ -113,17 +146,17 @@ export default function Nav({ openNav, onCloseNav }) {
       path: "/admin_hostel",
       icon: icon("ic_user"),
     },
-    {
-      title: "user",
-      path: "/user",
-      icon: icon("ic_user"),
-    },
+    // {
+    //   title: "user",
+    //   path: "/user",
+    //   icon: icon("ic_user"),
+    // },
   
-    {
-      title: "blog",
-      path: "/blog",
-      icon: icon("ic_blog"),
-    },
+    // {
+    //   title: "blog",
+    //   path: "/blog",
+    //   icon: icon("ic_blog"),
+    // },
   ];
   const pathname = usePathname();
 const dispatch=useDispatch()
@@ -181,9 +214,28 @@ const dispatch=useDispatch()
           ))}
         </>
       ) : null}
-      {adminToken && admin_user ? (
+      {adminToken && admin_user&&admin_user.role==="staff" ? (
         <>
           {navConfigAdmin.map((item) => (
+            <NavItem key={item.title} item={item} />
+          ))}
+          <div onClick={()=>dispatch(logout())}>
+
+          <NavItem
+          
+          key={"Logout"}
+          item={{
+            title: "Logout",
+            path: "/hostels",
+            icon: icon("ic_disabled"),
+          }}
+          />
+          </div>
+        </>
+      ) : null}
+      {adminToken && admin_user&&admin_user.role==="admin" ? (
+        <>
+          {navConfigAdminSuper.map((item) => (
             <NavItem key={item.title} item={item} />
           ))}
           <div onClick={()=>dispatch(logout())}>

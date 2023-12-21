@@ -278,7 +278,7 @@ const SingleHostel = () => {
               {hostelData?.hostel_state} - {hostelData?.hostel_zip_code}
             </Typography>
             <YourRatingComponent rating={hostelData?.hostel_rating} />
-            <Typography>By {hostelData?.owner_name}</Typography>
+            <Typography>By {hostelData?.owner_name} - {hostelData?.hostel_phone}</Typography>
           </Box>
           {/* <Carousel style={{
                         height: "800px",
@@ -288,7 +288,7 @@ const SingleHostel = () => {
                             return <Item key={item.id} item={item} />;
                         })} */}
           {/* <Paper > */}
-          <img src={hostelData?.hostel_img} alt="slide1" className="craw" />
+          <img style={{width:"400px"}} src={hostelData?.hostel_img} alt="slide1" className="craw" />
           {/* </Paper> */}
           {/* </Carousel> */}
           <Box>

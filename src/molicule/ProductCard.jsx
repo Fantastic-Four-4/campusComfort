@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import "./hostelcard.css"
 import "./card.css"
 import { capitalizeFirstLetter } from '../atoms/State';
+import { Chip } from '@mui/material';
 // ----------------------------------------------------------------------
 
 export default function ShopProductCard({ hostel }) {
@@ -79,21 +80,43 @@ export default function ShopProductCard({ hostel }) {
         </div>
         <div className="facilites">
           <p><span className='facilitiy-heading'>Equipped</span> with</p>
-          <div>
 
-          {hostel?.hostel_features?.single_bed?<p  style={{ padding: '5px',margin:"5px",borderRadius:"7px",background:"var(--light-green)" ,color:"white"}}>Single Bed</p>:null}
-          {hostel?.hostel_features?.single_bed?<p  style={{ padding: '5px',margin:"5px",borderRadius:"7px",background:"var(--light-green)" ,color:"white"}}>Single Bed</p>:null}
-          {hostel?.hostel_features?.single_bed?<p  style={{ padding: '5px',margin:"5px",borderRadius:"7px",background:"var(--light-green)" ,color:"white"}}>Single Bed</p>:null}
-          {hostel?.hostel_features?.single_bed?<p  style={{ padding: '5px',margin:"5px",borderRadius:"7px",background:"var(--light-green)" ,color:"white"}}>Single Bed</p>:null}
+          <div style={{display:"flex",flexWrap:"wrap"}}>
+
+          {hostel?.hostel_features &&
+                  Object.entries(hostel.hostel_features).map(
+                    ([feature, value]) => {
+                      if (value) {
+                        return (
+                          <Chip
+                            key={feature}
+                            label={feature}
+                            style={{
+                              margin: "5px",
+                              fontSize: "1.1rem",
+                              color: "rgb(0, 151, 118)",
+                              backgroundColor: "#fff",
+                              border: "solid 2px rgb(96, 195, 173)",
+                            }}
+                          ></Chip>
+                        );
+                      }
+                      return null;
+                    }
+                  )}
           </div>
+
         </div>
         <div className="details">
-        
-          <img src="https://th.bing.com/th/id/OIP.SNRWR7GfIRZZi7VnK5oLLgHaEK?rs=1&pid=ImgDetMain" className='gender-icon' alt="" srcSet="" />
+        {hostel?.allowed_for.toLowerCase()==="boys"?
+
+          <img src="./assets/boy.jpg" className='gender-icon' alt="" srcSet="" />
+          :<img src="./assets/girl.jpg" className='gender-icon' alt="" srcSet="" />
+        }
           <p>{hostel?.allowed_for}</p>
           <div className='separator' />
-          <img src="https://th.bing.com/th/id/OIP.SNRWR7GfIRZZi7VnK5oLLgHaEK?rs=1&pid=ImgDetMain" className='occupancy-icon' alt="" />
-          <p>{hostel?.beds}</p>
+          {/* <img src="https://th.bing.com/th/id/OIP.SNRWR7GfIRZZi7VnK5oLLgHaEK?rs=1&pid=ImgDetMain" className='occupancy-icon' alt="" />
+          <p>{hostel?.beds}</p> */}
         </div>
         <div className="align-cont">
           <button className='card-btn1' type='button'>SCHEDULE A VISIT</button>

@@ -100,7 +100,7 @@ import TextArea from "antd/es/input/TextArea";
   
       if (creatProductResponseInfo.isSuccess) {
         message.success("Product Created");
-        navigate("/admin/products");
+        navigate("/admin_hostel");
       }
     }, [creatProductResponseInfo]);
     useEffect(() => {
