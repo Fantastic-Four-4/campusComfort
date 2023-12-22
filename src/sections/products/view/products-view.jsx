@@ -1,5 +1,5 @@
 import { useState } from 'react';
-
+import React from 'react'
 import Stack from '@mui/material/Stack';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Unstable_Grid2';
@@ -13,8 +13,10 @@ import ProductCartWidget from '../product-cart-widget';
 import ShopProductCard from '../../../molicule/ProductCard';
 import { useFetchHostelQuery } from '../../../store/store';
 import { useDispatch, useSelector } from 'react-redux';
-import { Pagination } from 'antd';
+import { Button, Pagination } from 'antd';
 import { Hostel_page } from '../../../store/mutation/userSlice';
+import Map from '../../../molicule/allmaps';
+import { Box, Drawer } from '@mui/material';
 
 // ----------------------------------------------------------------------
 const hostel = [
@@ -130,6 +132,47 @@ const handlePageChange=(data)=>{
   const handleCloseFilter = () => {
     setOpenFilter(false);
   };
+  const locations = [
+    { name: 'Kopargaon', latitude: 19.8804, longitude: 74.4747 },
+    { name: 'Anapurne Nagar', latitude: 19.8985769, longitude: 74.4891958 },
+    { name: 'Sanjivani', latitude: 19.90194, longitude: 74.49428 },
+    { name: 'Garima Nagar', latitude: 19.880870, longitude: 74.474190 },
+    { name: 'Ambika Nagar', latitude: 19.22656, longitude: 73.09031 },
+    { name: 'Natraj', latitude: 18.45083, longitude: 73.87951 },
+    // { name: '', latitude: 19.226560, longitude: 73.090310 },
+    // { name: 'Nashik', latitude: 20.0059, longitude: 73.7917 },
+    // { name: 'Aurangabad', latitude: 19.8762, longitude: 75.3433 },
+    // { name: 'Nagpur', latitude: 21.1466, longitude: 79.0882 },
+    // { name: 'Solapur', latitude: 17.6599, longitude: 75.9064 },
+    // { name: 'Kolhapur', latitude: 16.7050, longitude: 74.2433 },
+  ];
+  const [state, setState] = useState({
+    top: false,
+    left: false,
+    bottom: false,
+    right: false,
+  });
+
+  const toggleDrawer = (anchor, open) => (event) => {
+    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+      return;
+    }
+
+    setState({ ...state, [anchor]: open });
+  };
+  const list = (anchor) => (
+    <Box
+      sx={{ width: "80vw", height: "100vh" }}
+      role="presentation"
+      onClick={toggleDrawer(anchor, false)}
+      onKeyDown={toggleDrawer(anchor, false)}
+    >
+      <div>
+        <Map locations={locations} />
+      </div>
+    </Box>
+  );
+
 
   return (
     <Container>
@@ -153,6 +196,25 @@ const handlePageChange=(data)=>{
 
           <ProductSort />
         </Stack>
+        <Stack>
+          {['right'].map((anchor) => (
+            <React.Fragment key={anchor}>
+              <Button onClick={toggleDrawer(anchor, true)}
+                style={{
+                  marginLeft: "19rem",
+                }}
+              >Show Map</Button>
+              <Drawer
+                anchor={anchor}
+                open={state[anchor]}
+                onClose={toggleDrawer(anchor, false)}
+              >
+                {list(anchor)}
+              </Drawer>
+            </React.Fragment>
+          ))}
+        </Stack>
+
       </Stack>
 
       {/* <Grid container spacing={3}>

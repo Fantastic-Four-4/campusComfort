@@ -99,8 +99,8 @@ import TextArea from "antd/es/input/TextArea";
       }
   
       if (creatProductResponseInfo.isSuccess) {
-        message.success("Product Created");
-        navigate("/admin_hostel");
+        message.success("Hostel Created");
+        navigate("/");
       }
     }, [creatProductResponseInfo]);
     useEffect(() => {
@@ -109,8 +109,8 @@ import TextArea from "antd/es/input/TextArea";
       }
   
       if (updateProductResponseInfo.isSuccess) {
-        message.success("Product Updated");
-        navigate("/admin/products");
+        message.success("Hostel Updated");
+        navigate("/admin_hostel");
       }
     }, [updateProductResponseInfo]);
   

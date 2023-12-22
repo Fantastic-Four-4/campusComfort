@@ -18,6 +18,7 @@ import "../card.css";
 import axios from "axios";
 import Modal from "react-modal";
 import { useGetMyHostelQuery } from "../../store/store";
+import { message } from "antd";
 // import { MapComponent } from "src/components/map/MapComponent";
 
 // const hostelData = {
@@ -191,20 +192,22 @@ const SingleHostel = () => {
     return (
       <div className="row">
         <div className="col-md-12">
-          <form onSubmit={() => alert("Details Submitted")}>
+          <form onSubmit={(e) => {
+            e.preventDefault()
+            message.success(`Phone No ${hostelData?.hostel_phone}`)}}>
             <fieldset>
               <legend>
                 <span className="number">1</span> Your Info
               </legend>
 
               <label for="name">Name:</label>
-              <input type="text" id="name" name="user_name" />
+              <input style={{width:"100%",height:"30px"}} required type="text" id="name" name="user_name" />
 
               <label for="email">Phone Number:</label>
-              <input type="text" id="mail" name="user_email" />
+              <input style={{width:"100%",height:"30px",marginBottom:"30px"}}  required type="text" id="mail" name="user_email" />
 
               <button type="submit" className="call-btn">
-                Schedule Call
+                Get Phone No
               </button>
             </fieldset>
           </form>
@@ -278,7 +281,7 @@ const SingleHostel = () => {
               {hostelData?.hostel_state} - {hostelData?.hostel_zip_code}
             </Typography>
             <YourRatingComponent rating={hostelData?.hostel_rating} />
-            <Typography>By {hostelData?.owner_name} - {hostelData?.hostel_phone}</Typography>
+            <Typography>By {hostelData?.owner_name} </Typography>
           </Box>
           {/* <Carousel style={{
                         height: "800px",
@@ -349,7 +352,7 @@ const SingleHostel = () => {
                 type="button"
                 onClick={() => setClicked(0)}
               >
-                SCHEDULE A VISIT
+                SCHEDULE A GET PHONE NO.
               </button>
             </Box>
             <Box flex={1}>

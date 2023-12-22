@@ -13,13 +13,15 @@ const Footer = () => {
               <div className="col-lg-6 offset-lg-3">
                 <div className="contact-content text-center">
                   <a href="#" style={{textDecoration:"none"}}>
-                    <h1>Campus Comfort</h1>
+                    <h1>Campus<span style={{color:"teal"}}>Comforts
+                      </span>
+                      </h1>
                   </a>
                   <p className="contact-quote">
-                    "If you don't care your customer, Somebody else will"
+                    "Your Comforts Our Solutions"
                   </p>
                   <div className="hr"></div>
-                  <h6>Campus Comfort, Kopargaon.</h6>
+                  <h6>Campus Comforts, Kopargaon.</h6>
                   <h6>+91 8698 4405 84</h6>
                 </div>
               </div>

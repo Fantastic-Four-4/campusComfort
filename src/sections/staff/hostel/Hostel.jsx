@@ -53,6 +53,12 @@ const Hostel = () => {
 
   const columns = [
     {
+      title: "Serial No",
+      key: "serialNo",
+      width: 100,
+      render: (text, record, index) => <span>{hostel_page * 9 - 9 + index + 1}</span>,
+    },
+    {
       title: "Hostel ID",
       dataIndex: "_id",
       key: "_id",
@@ -61,6 +67,18 @@ const Hostel = () => {
     {
       title: "Hostel Name",
       dataIndex: "hostel_name",
+      key: "_id",
+      width: 150,
+    },
+    {
+      title: "Owner name",
+      dataIndex: "owner_name",
+      key: "_id",
+      width: 150,
+    },
+    {
+      title: "Hostel Phone",
+      dataIndex: "hostel_phone",
       key: "_id",
       width: 150,
     },
@@ -93,6 +111,7 @@ const Hostel = () => {
   ];
   return (
     <div>
+      <h2 style={{color:"white",background:"teal",padding:"10px",margin:"10px 0px"}}>HOSTEL LIST</h2>
       <ETable
         columns={columns}
         data={data}

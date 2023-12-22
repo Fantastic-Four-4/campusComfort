@@ -1,5 +1,5 @@
 .ant-table-thead tr th{
-    background-color: var(--primary-color)!important;
+    background-color: teal!important;
     color: white!important;
 }
 .create-product-input-from{
